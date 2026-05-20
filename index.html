@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PMAX · Marketing Brief 2026</title>
+<title>Marketing Brief · PMAX</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -39,11 +39,11 @@ body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--navy);font
 
 /* Rate card */
 #rate-card-wrap{border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-top:20px}
-.rc-header{background:var(--navy);color:#fff;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;user-select:none}
+.rc-header{background:#FDEAB0;color:#7A4A00;border-bottom:1.5px solid #F0D090;padding:13px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;user-select:none}
 .rc-header-text h3{font-size:13px;font-weight:700;margin:0}
-.rc-header-text p{font-size:11px;color:rgba(255,255,255,.6);margin:3px 0 0;line-height:1.4}
-.rc-toggle-btn{background:rgba(255,255,255,.12);border:none;color:#fff;font-family:'Lexend',sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.rc-toggle-btn:hover{background:rgba(255,255,255,.22)}
+.rc-header-text p{font-size:11px;color:#9A6A20;margin:3px 0 0;line-height:1.4}
+.rc-toggle-btn{background:#C8922A;border:none;color:#fff;font-family:'Lexend',sans-serif;font-size:11px;font-weight:600;padding:5px 12px;border-radius:5px;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.rc-toggle-btn:hover{background:#a87520}
 .rc-body{padding:14px 16px 10px}
 .rc-body.collapsed{display:none}
 .activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
@@ -112,7 +112,7 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
 .scale-opt:hover{border-color:var(--blue);background:var(--blue-lt);color:var(--blue)}
 .scale-opt.selected{border-color:var(--blue);background:var(--blue);color:#fff}
 .scale-labels{display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted);max-width:280px}
-.file-zone{border:1.5px dashed var(--border);border-radius:8px;padding:13px 14px;text-align:center;cursor:pointer;transition:.15s;background:#FAFBFF;position:relative;max-width:400px}
+.file-zone{border:1.5px dashed var(--border);border-radius:8px;padding:13px 14px;text-align:center;cursor:pointer;transition:.15s;background:#FAFBFF;position:relative;width:100%}
 .file-zone:hover{border-color:var(--blue);background:var(--blue-lt)}
 .file-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
 .file-zone .fz-icon{font-size:20px;margin-bottom:3px}
@@ -236,7 +236,9 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
     <!-- I. THÔNG TIN CHUNG -->
     <div class="sec-head"><div class="sec-roman">I</div><div class="sec-title">THÔNG TIN CHUNG</div></div>
     <div class="sec-body">
-      <div class="row-2">
+      <!-- Người yêu cầu -->
+      <div style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid var(--blue-lt)">👤 Thông tin người yêu cầu</div>
+      <div class="row-2" style="margin-bottom:18px">
         <div class="field">
           <div class="f-label">Phòng ban / Bộ phận <span class="req">*</span></div>
           <input type="text" id="f-dept" placeholder="Ví dụ: Account, Media, Strategy, Creative...">
@@ -254,16 +256,22 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
           <input type="email" id="f-email" placeholder="email@pmax.vn">
         </div>
         <div class="field">
-          <div class="f-label">Người phê duyệt chính <span class="req">*</span></div>
-          <input type="text" id="f-approver" placeholder="Manager / Director">
+          <div class="f-label">Ngày gửi brief <span class="req">*</span></div>
+          <input type="date" id="f-submit-date">
+        </div>
+      </div>
+      <!-- Người phê duyệt -->
+      <div style="font-size:11px;font-weight:700;color:var(--gold, #C8922A);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;padding-bottom:6px;border-bottom:1.5px solid #FFF0D0">✅ Người phê duyệt chính</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Người quản lý trực tiếp hoặc cấp trên có thẩm quyền phê duyệt yêu cầu này. Email sẽ nhận được thông báo sau khi brief được gửi.</div>
+      <div class="row-2">
+        <div class="field">
+          <div class="f-label">Họ tên – Chức danh <span class="req">*</span></div>
+          <input type="text" id="f-approver" placeholder="Ví dụ: Nguyễn Văn A – Director of Account">
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;font-style:italic">Ghi rõ tên đầy đủ và chức danh của người phê duyệt</div>
         </div>
         <div class="field">
           <div class="f-label">Email người phê duyệt <span class="req">*</span></div>
           <input type="email" id="f-approver-email" placeholder="approver@pmax.vn">
-        </div>
-        <div class="field">
-          <div class="f-label">Ngày gửi brief <span class="req">*</span></div>
-          <input type="date" id="f-submit-date">
         </div>
       </div>
     </div>
@@ -324,8 +332,8 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
       <div id="rate-card-wrap">
         <div class="rc-header" onclick="toggleRC()">
           <div class="rc-header-text">
-            <h3>🎯 Các hoạt động MKT team thường triển khai - Tham khảo trước khi điền brief</h3>
-            <p>Hiểu rõ chi phí từng hoạt động để cân nhắc lựa chọn phù hợp với nhu cầu của team</p>
+            <h3>® Các hoạt động MKT team thường triển khai với cross department - Tham khảo trước khi điền brief</h3>
+            <p>Hiểu rõ chi phí từng hoạt động để cân nhắc lựa chọn phù hợp với mục tiêu và ROI</p>
           </div>
           <button class="rc-toggle-btn" id="rc-btn" onclick="event.stopPropagation();toggleRC()">▶ Xem các hoạt động</button>
         </div>
@@ -712,13 +720,7 @@ async function submitForm(){
   const local=JSON.parse(localStorage.getItem(LK)||'[]');
   local.unshift(data);localStorage.setItem(LK,JSON.stringify(local));
   const u=localStorage.getItem(UK);
-  if(u){try{
-    // Apps Script yêu cầu gửi dạng form-urlencoded hoặc dùng iframe trick
-    // Dùng URLSearchParams để bypass CORS issue
-    const form=new FormData();
-    form.append('payload', JSON.stringify(data));
-    await fetch(u, {method:'POST', mode:'no-cors', body: form});
-  }catch(e){console.error('Submit error:',e);}}
+  if(u){try{await fetch(u,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}catch(e){}}
   setTimeout(()=>{
     document.getElementById('loader').classList.remove('open');
     document.getElementById('btn-submit').disabled=false;
