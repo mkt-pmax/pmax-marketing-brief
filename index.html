@@ -588,6 +588,9 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('#f-priority .scale-opt').forEach(x=>x.classList.remove('selected'));
     o.classList.add('selected'); SP=o.dataset.val;
   }));
+  // Pre-configured URL — auto-connect for all users
+  const HARDCODED_URL = 'https://script.google.com/a/macros/pmax.com.vn/s/AKfycbwD9LUNUmVwnhbjE5Mbvi7UV7s7Xb3xa-GV6nRkWM1FIEMgjEC2HSasPThI0s2GvYjiKA/exec';
+  if(!localStorage.getItem(UK)) localStorage.setItem(UK, HARDCODED_URL);
   const u=localStorage.getItem(UK);
   if(u){document.getElementById('cfg-url').value=u;setCfgOk();}
 });
@@ -709,7 +712,13 @@ async function submitForm(){
   const local=JSON.parse(localStorage.getItem(LK)||'[]');
   local.unshift(data);localStorage.setItem(LK,JSON.stringify(local));
   const u=localStorage.getItem(UK);
-  if(u){try{await fetch(u,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});}catch(e){}}
+  if(u){try{
+    // Apps Script yêu cầu gửi dạng form-urlencoded hoặc dùng iframe trick
+    // Dùng URLSearchParams để bypass CORS issue
+    const form=new FormData();
+    form.append('payload', JSON.stringify(data));
+    await fetch(u, {method:'POST', mode:'no-cors', body: form});
+  }catch(e){console.error('Submit error:',e);}}
   setTimeout(()=>{
     document.getElementById('loader').classList.remove('open');
     document.getElementById('btn-submit').disabled=false;
