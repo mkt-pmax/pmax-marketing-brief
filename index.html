@@ -86,6 +86,10 @@ body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--navy);font
 .sec-body{padding:20px 24px;border-bottom:1.5px solid var(--border)}
 .row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field{margin-bottom:0}
+.field-error input,.field-error textarea,.field-error select{border-color:var(--red)!important;background:#FFF5F5!important;box-shadow:0 0 0 3px rgba(204,34,0,.1)!important;animation:shake .3s ease}
+.field-error .check-grid,.field-error .check-grid-3{border:1.5px solid var(--red);border-radius:8px;padding:8px;background:#FFF5F5;animation:shake .3s ease}
+.field-error .f-label{color:var(--red)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 .f-label{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:5px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .req{color:var(--red);font-size:13px}
 .opt{font-size:10px;color:var(--muted);font-weight:400}
@@ -100,6 +104,20 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
 .date-range{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dr-lbl{font-size:10px;color:var(--muted);margin-bottom:3px}
 .check-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.multi-drop{position:relative;user-select:none}
+.multi-drop-trigger{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:#fff;cursor:pointer;transition:.15s;font-size:13px;color:var(--navy)}
+.multi-drop-trigger:hover{border-color:var(--blue)}
+.multi-drop.open .multi-drop-trigger{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,0,255,.08)}
+.multi-drop-text{flex:1;color:var(--muted)}
+.multi-drop-text.has-val{color:var(--navy);font-weight:500}
+.multi-drop-arrow{font-size:11px;color:var(--muted);transition:transform .2s;margin-left:8px}
+.multi-drop.open .multi-drop-arrow{transform:rotate(180deg)}
+.multi-drop-list{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1.5px solid var(--blue);border-radius:8px;box-shadow:0 4px 16px rgba(0,26,110,.12);z-index:50;overflow:hidden}
+.multi-drop.open .multi-drop-list{display:block}
+.multi-drop-item{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;transition:.1s;font-size:13px;color:var(--navy)}
+.multi-drop-item:hover{background:var(--blue-lt)}
+.multi-drop-item input{width:15px;height:15px;accent-color:var(--blue);flex-shrink:0}
+.multi-drop-item.checked{background:var(--blue-lt);font-weight:500}
 .check-grid.cols-1{grid-template-columns:1fr}
 .check-item{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;border:1.5px solid var(--border);border-radius:7px;cursor:pointer;transition:.12s;background:#fff;user-select:none}
 .check-item:hover{border-color:var(--blue);background:var(--blue-lt)}
@@ -295,7 +313,24 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
         </div>
         <div class="field">
           <div class="f-label">Thị trường / Khu vực <span class="req">*</span></div>
-          <input type="text" id="f-market" placeholder="Toàn quốc / HCM / HN / Quốc tế...">
+          <div class="multi-drop" id="f-market">
+            <div class="multi-drop-trigger" onclick="toggleDrop('f-market')">
+              <span class="multi-drop-text" id="f-market-text">Chọn khu vực...</span>
+              <span class="multi-drop-arrow">▾</span>
+            </div>
+            <div class="multi-drop-list" id="f-market-list">
+              <label class="multi-drop-item"><input type="checkbox" value="TP. Hồ Chí Minh"><span>TP. Hồ Chí Minh</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Hà Nội"><span>Hà Nội</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Đà Nẵng"><span>Đà Nẵng</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Khu vực miền Bắc"><span>Khu vực miền Bắc</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Khu vực miền Trung"><span>Khu vực miền Trung</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Khu vực miền Nam"><span>Khu vực miền Nam</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Khu vực miền Tây"><span>Khu vực miền Tây</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Toàn quốc"><span>Toàn quốc</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Quốc tế"><span>Quốc tế</span></label>
+              <label class="multi-drop-item"><input type="checkbox" value="Khác"><span>Khác</span></label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="field mt">
@@ -410,16 +445,16 @@ textarea{resize:vertical;min-height:72px;line-height:1.6}
     <div class="sec-body">
       <div class="row-2">
         <div class="field">
-          <div class="f-label">Tên sản phẩm / dịch vụ <span class="opt">(không bắt buộc)</span></div>
+          <div class="f-label">Tên sản phẩm / dịch vụ <span class="req">*</span></div>
           <input type="text" id="f-product-name" placeholder="Tên chính thức">
         </div>
         <div class="field">
-          <div class="f-label">Danh mục <span class="opt">(không bắt buộc)</span></div>
+          <div class="f-label">Danh mục <span class="req">*</span></div>
           <input type="text" id="f-category" placeholder="Performance MKT / AI Agents / Creative...">
         </div>
       </div>
       <div class="field mt">
-        <div class="f-label">Tính năng nổi bật &amp; Lợi ích <span class="opt">(không bắt buộc)</span></div>
+        <div class="f-label">Tính năng nổi bật &amp; Lợi ích <span class="req">*</span></div>
         <textarea id="f-features" placeholder="Liệt kê 3–5 tính năng chính và lý do KH chọn sản phẩm này"></textarea>
       </div>
       <div class="row-2 mt">
@@ -671,7 +706,7 @@ function collect(){return{
   'Mục tiêu':gc('f-goals'),
   'KPI':document.getElementById('f-kpi').value.trim(),
   'Target Audience':document.getElementById('f-audience').value.trim(),
-  'Thị trường':document.getElementById('f-market').value.trim(),
+  'Thị trường':[...document.querySelectorAll('#f-market input:checked')].map(i=>i.value).join(', '),
   'Key Message':document.getElementById('f-message').value.trim(),
   'USP':document.getElementById('f-usp').value.trim(),
   'Ngân sách':document.getElementById('f-budget').value.trim(),
@@ -698,20 +733,51 @@ function validate(d){
   const checks=[
     ['Phòng ban'],['Người yêu cầu'],['Chức danh'],['Email'],['Người phê duyệt'],['Email người phê duyệt','Email người phê duyệt chính'],
     ['Mục tiêu','Mục tiêu campaign (chọn ít nhất 1)'],
-    ['KPI','Target KPI'],['Target Audience','Đối tượng mục tiêu'],['Thị trường'],
+    ['KPI','Target KPI'],['Target Audience','Đối tượng mục tiêu'],['Thị trường','Thị trường / Khu vực (chọn ít nhất 1)'],
     ['Key Message'],['USP'],['Nguồn ngân sách','Nguồn ngân sách (chọn ít nhất 1)'],
     ['Ngày bắt đầu','Ngày bắt đầu triển khai'],['Ngày kết thúc','Ngày kết thúc triển khai'],
     ['Mức độ ưu tiên','Mức độ ưu tiên (chọn 1–5)'],['Lý do ưu tiên'],
     ['Hình thức triển khai','Hình thức triển khai (chọn ít nhất 1)'],
     ['Kênh truyền thông','Kênh truyền thông (chọn ít nhất 1)'],
+    ['Tên sản phẩm','Tên sản phẩm / dịch vụ'],
+    ['Danh mục','Danh mục sản phẩm'],
+    ['Features & Benefits','Tính năng & lợi ích sản phẩm'],
   ];
-  for(const [k,m] of checks)if(!d[k])return{ok:false,msg:m||k};
+  // Clear all highlights
+  document.querySelectorAll('.field-error').forEach(el=>el.classList.remove('field-error'));
+  for(const [k,m] of checks){
+    if(!d[k]){
+      highlightField(k);
+      return{ok:false,msg:m||k};
+    }
+  }
   return{ok:true};
+}
+
+// Map key → element id for highlighting
+const FIELD_MAP = {
+  'Phòng ban':'f-dept','Người yêu cầu':'f-requester','Chức danh':'f-job-title',
+  'Email':'f-email','Người phê duyệt':'f-approver','Email người phê duyệt':'f-approver-email',
+  'Mục tiêu':'f-goals','KPI':'f-kpi','Target Audience':'f-audience',
+  'Thị trường':'f-market','Key Message':'f-message','USP':'f-usp',
+  'Nguồn ngân sách':'f-budget-source','Ngày bắt đầu':'f-date-start',
+  'Ngày kết thúc':'f-date-end','Lý do ưu tiên':'f-priority-reason',
+  'Hình thức triển khai':'f-format','Kênh truyền thông':'f-channels',
+  'Tên sản phẩm':'f-product-name','Danh mục':'f-category',
+  'Features & Benefits':'f-features',
+};
+function highlightField(key){
+  const id=FIELD_MAP[key];
+  if(!id)return;
+  const el=document.getElementById(id);
+  if(!el)return;
+  const wrap=el.closest('.field')||el.parentElement;
+  if(wrap){wrap.classList.add('field-error');wrap.scrollIntoView({behavior:'smooth',block:'center'});}
 }
 
 async function submitForm(){
   const data=collect();const v=validate(data);
-  if(!v.ok){alert('⚠️ Vui lòng điền đầy đủ: '+v.msg);return;}
+  if(!v.ok){showToast('⚠️ Vui lòng điền đầy đủ: '+v.msg);return;}
   document.getElementById('loader').classList.add('open');
   document.getElementById('btn-submit').disabled=true;
   const now=new Date();
@@ -752,6 +818,39 @@ function exportCSV(){
   a.href=URL.createObjectURL(new Blob(['\ufeff'+rows.join('\n')],{type:'text/csv;charset=utf-8;'}));
   a.download='PMAX_Briefs_'+new Date().toLocaleDateString('vi-VN').replace(/\//g,'-')+'.csv';
   a.click();
+}
+</script>
+<script>
+function toggleDrop(id){
+  const wrap=document.getElementById(id);
+  wrap.classList.toggle('open');
+}
+// Close dropdown when clicking outside
+document.addEventListener('click',function(e){
+  document.querySelectorAll('.multi-drop.open').forEach(d=>{
+    if(!d.contains(e.target))d.classList.remove('open');
+  });
+});
+// Update display text when checkbox changes
+document.addEventListener('change',function(e){
+  const item=e.target.closest('.multi-drop-item');
+  if(!item)return;
+  const wrap=item.closest('.multi-drop');
+  if(!wrap)return;
+  item.classList.toggle('checked',e.target.checked);
+  const checked=[...wrap.querySelectorAll('input:checked')].map(i=>i.value);
+  const txt=wrap.querySelector('.multi-drop-text');
+  if(checked.length===0){txt.textContent='Chọn khu vực...';txt.classList.remove('has-val');}
+  else{txt.textContent=checked.join(', ');txt.classList.add('has-val');}
+});
+</script>
+</body> style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#CC2200;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:500;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:90vw;text-align:center;line-height:1.5"></div>
+<script>
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>{t.style.display='none';},4000);
 }
 </script>
 </body>
