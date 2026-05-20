@@ -845,8 +845,7 @@ document.addEventListener('change',function(e){
   else{txt.textContent=checked.join(', ');txt.classList.add('has-val');}
 });
 </script>
-</body> style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#CC2200;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:500;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:90vw;text-align:center;line-height:1.5"></div>
-<script>
+<div id="toast" style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#CC2200;color:#fff;padding:12px 22px;border-radius:10px;font-size:13px;font-weight:600;z-index:500;box-shadow:0 4px 20px rgba(0,0,0,.2);max-width:90vw;text-align:center;line-height:1.5"></div><script>
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.style.display='block';
