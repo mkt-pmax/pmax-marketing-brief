@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     o.classList.add('selected'); SP=o.dataset.val;
   }));
   // Pre-configured URL — auto-connect for all users
-  const HARDCODED_URL = 'https://script.google.com/a/macros/pmax.com.vn/s/AKfycbwD9LUNUmVwnhbjE5Mbvi7UV7s7Xb3xa-GV6nRkWM1FIEMgjEC2HSasPThI0s2GvYjiKA/exec';
+  const HARDCODED_URL = 'https://script.google.com/macros/s/AKfycby7FMRDQNd3CZK-Uscne29luQnWBqi_i6F7QNw1vHGJ6Vdv4NpuDxdPMXfZG3vG2Bz4/exec';
   if(!localStorage.getItem(UK)) localStorage.setItem(UK, HARDCODED_URL);
   const u=localStorage.getItem(UK);
   if(u){document.getElementById('cfg-url').value=u;setCfgOk();}
